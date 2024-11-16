@@ -20,6 +20,7 @@
             padding: 15px;
             display: flex;
             justify-content: space-around;
+            flex-wrap: wrap;
             border-bottom: 2px solid #695969;
         }
 
@@ -48,7 +49,6 @@
             display: block;
         }
 
-        /* Estilos para las imágenes decorativas */
         .fractal-decoration {
             position: absolute;
             width: 200px;
@@ -57,28 +57,10 @@
             z-index: 0;
         }
 
-        .top-left {
-            top: 0;
-            left: 0;
-            transform: rotate(180deg);
-        }
-
-        .top-right {
-            top: 0;
-            right: 0;
-            transform: rotate(270deg);
-        }
-
-        .bottom-left {
-            bottom: 0;
-            left: 0;
-            transform: rotate(90deg);
-        }
-
-        .bottom-right {
-            bottom: 0;
-            right: 0;
-        }
+        .top-left { top: 0; left: 0; transform: rotate(180deg); }
+        .top-right { top: 0; right: 0; transform: rotate(270deg); }
+        .bottom-left { bottom: 0; left: 0; transform: rotate(90deg); }
+        .bottom-right { bottom: 0; right: 0; }
 
         .center-image {
             display: block;
@@ -87,7 +69,6 @@
             height: 100px;
         }
 
-        /* Estilos para la sección de inicio */
         #inicio {
             text-align: center;
             padding: 40px 20px;
@@ -110,48 +91,38 @@
             z-index: 1;
         }
 
-        /* Estilos para la sección de generar fractales */
         #generar-fractal .form-container {
             background-color: rgba(105, 89, 105, 0.8);
             padding: 30px;
             border-radius: 10px;
-            max-width: 400px;
+            max-width: 90%;
             margin: 20px auto;
         }
 
-        .form-container input {
-            width: calc(100% - 16px);
-            padding: 8px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 5px;
-            background-color: #ffffff;
-        }
-
-        .form-container label {
+        .form-container input, .form-container label {
+            width: 100%;
             display: block;
-            margin-top: 15px;
+            margin: 8px 0;
+            padding: 8px;
         }
 
-        /* Estilos para la sección de conectar dispositivo */
         #conectar-dispositivo .connect-container {
             background-color: rgba(105, 89, 105, 0.8);
             padding: 30px;
             border-radius: 10px;
-            max-width: 400px;
+            max-width: 90%;
             margin: 40px auto;
         }
 
         .device-input {
-            margin: 20px 0;
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
         }
 
         .device-input input {
-            flex: 1;
+            flex: 1 1 60%;
             padding: 8px;
-            border: none;
             border-radius: 5px;
         }
 
@@ -174,10 +145,7 @@
             justify-content: center;
             gap: 20px;
             margin-top: 20px;
-        }
-
-        .button-group button#cancel {
-            background-color: #8A7A8A;
+            flex-wrap: wrap;
         }
 
         canvas {
@@ -194,40 +162,23 @@
             margin-bottom: 30px;
         }
 
-        .color-preview {
-            width: 100%;
-            height: 30px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-        .fractal-concepts {
-            margin-top: 30px;
-        }
-    
-        .concept-box {
-            background-color: rgba(74, 61, 74, 0.8);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 15px 0;
-            transition: transform 0.3s ease;
-        }
-    
-        .concept-box:hover {
-            transform: scale(1.02);
-        }
-    
-        .concept-box h4 {
-            color: #fff;
-            margin: 0 0 10px 0;
-            font-size: 1.2em;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-            padding-bottom: 5px;
-        }
-    
-        .concept-box p {
-            margin: 0;
-            line-height: 1.5;
-            font-size: 1.1em;
+        @media (max-width: 768px) {
+            nav a {
+                font-size: 1em;
+                padding: 8px 12px;
+            }
+
+            #inicio h2 {
+                font-size: 2em;
+            }
+
+            .fractal-info {
+                padding: 20px;
+            }
+
+            .form-container input {
+                font-size: 1em;
+            }
         }
     </style>
 </head>
