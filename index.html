@@ -13,7 +13,7 @@
             background-color: #9B8B9B;
             color: #fff;
         }
-
+ 
         nav {
             background-color: #8A7A8A;
             width: 100%;
@@ -36,6 +36,50 @@
         nav a:hover {
             background-color: #695969;
         }
+/* Estilos para la pantalla de carga */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #e6d9e6; /* Lila claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out;
+}
+
+/* Estilos para el texto del título */
+#loading-screen h1 {
+    font-size: 15vw; /* Tamaño de fuente basado en el ancho de la ventana (más grande) */
+    color: violet; /* Color del texto */
+    text-align: center; /* Asegura que el texto esté centrado */
+    margin: 0; /* Elimina márgenes alrededor del texto */
+    text-shadow: 
+        3px 3px 8px rgba(0, 0, 0, 0.3),  /* Sombra difusa para un borde suave */
+        -3px -3px 8px rgba(0, 0, 0, 0.3), /* Sombra difusa para un borde suave */
+        3px -3px 8px rgba(0, 0, 0, 0.3),  /* Sombra difusa para un borde suave */
+        -3px 3px 8px rgba(0, 0, 0, 0.3);  /* Sombra difusa para un borde suave */
+}
+
+/* Estilo para ocultar la pantalla de carga */
+#loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Ajustes para pantallas pequeñas (móviles) */
+@media (max-width: 600px) {
+    #loading-screen h1 {
+        font-size: 20vw; /* Aumentar aún más el tamaño en pantallas pequeñas */
+    }
+}
+
+
+        /*==================*/
+
 
         .section {
             display: none;
@@ -161,6 +205,88 @@
             color: white;
             margin-bottom: 30px;
         }
+        .fractal-concepts {
+            display: flex;
+            gap: 20px;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .concept-box {
+            background-color: #694f68;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 30%;
+            min-width: 250px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .concept-box h4 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .concept-box p {
+            font-size: 1em;
+            line-height: 1.5;
+            color: #060505;
+        }
+        
+        /* Efecto al pasar el mouse */
+        .concept-box:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .concept-box:hover h4 {
+            text-decoration: underline;
+            color: #06040668;
+        }
+        
+        .concept-box:hover p {
+            color: #333;
+        }
+        
+        .concept-box:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Responsividad */
+        @media (max-width: 1024px) {
+            .concept-box {
+                width: 45%; /* Más anchas en pantallas medianas */
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .concept-box {
+                width: 100%; /* Ocupan todo el ancho en pantallas pequeñas */
+            }
+            .fractal-concepts {
+                gap: 10px; /* Reduce el espacio entre cajas */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .concept-box {
+                padding: 15px; /* Reduce el padding en pantallas muy pequeñas */
+            }
+        
+            .concept-box h4 {
+                font-size: 1.2em; /* Ajusta el tamaño del texto */
+            }
+        
+            .concept-box p {
+                font-size: 0.9em;
+            }
+        }
+        
 
         @media (max-width: 768px) {
             nav a {
@@ -183,6 +309,11 @@
     </style>
 </head>
 <body>
+        <!-- Pantalla de carga -->
+        <div id="loading-screen">
+            <h1>Fract Art</h1>
+        </div>
+    
     <nav>
         <a href="#" onclick="showSection('inicio')">Introducción</a>
         <a href="#" onclick="showSection('generar-fractal')">Generar Fractales</a>
@@ -263,10 +394,25 @@
             <div class="button-group">
                 <button id="cancel">Cancelar</button>
             </div>
+            <div id="message" style="color: green; font-weight: bold;"></div>
+
         </div>
     </div>
 
     <script>
+                // Función para ocultar la pantalla de carga
+                window.onload = function() {
+                    setTimeout(() => {
+                        document.getElementById('loading-screen').classList.add('hidden');
+                    }, 15000); // 3 segundos
+                };
+        
+                function showSection(id) {
+                    document.querySelectorAll('.section').forEach(section => {
+                        section.classList.remove('visible');
+                    });
+                    document.getElementById(id).classList.add('visible');
+                }
         // Función para mostrar/ocultar secciones
         function showSection(sectionId) {
             // Ocultar todas las secciones
@@ -349,14 +495,25 @@
         }
 
         // Event listeners para los botones de conexión
-        document.getElementById('connectBtn').addEventListener('click', function() {
-            const deviceName = document.getElementById('deviceName').value;
-            if (deviceName) {
-                alert(`Conectando a ${deviceName}...`);
-            } else {
-                alert('Por favor, ingrese un nombre de dispositivo.');
-            }
-        });
+// Event listeners para los botones de conexión
+// Event listeners para los botones de conexión
+document.getElementById('connectBtn').addEventListener('click', function() {
+    const deviceName = document.getElementById('deviceName').value;
+    const messageDiv = document.getElementById('message');
+
+    if (deviceName) {
+        messageDiv.textContent = `Conectando a ${deviceName}...`;
+        messageDiv.style.color = 'black';
+
+        // Cambiar el mensaje después de 3 segundos
+        setTimeout(() => {
+            messageDiv.textContent = `Dispositivo conectado exitosamente.`;
+        }, 3000);
+    } else {
+        messageDiv.textContent = 'Por favor, ingrese un nombre de dispositivo.';
+        messageDiv.style.color = 'red';
+    }
+});
 
         document.getElementById('cancel').addEventListener('click', function() {
             document.getElementById('deviceName').value = '';
